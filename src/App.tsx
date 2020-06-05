@@ -1,25 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {default as bemCssModules} from 'bem-css-modules';
+import {Display} from "./components/Display/Display";
+import {MemoryContainer} from "./containers/MemoryContainer/MemoryContainer";
+import {Keyboard} from "./containers/Keyboard/Keyboard";
+import {default as AppStyles} from './App.module.scss';
+import {Provider} from 'mobx-react'
+import {getRootStores} from "./stores/getRootStores";
+
+const style = bemCssModules(AppStyles);
+
+bemCssModules.setSettings({
+    modifierDelimiter: '--'
+})
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Provider {...getRootStores()}>
+        <div className={style()}>
+          <Display />
+          <MemoryContainer/>
+          <Keyboard/>
+        </div>
+    </Provider>
   );
 }
 
